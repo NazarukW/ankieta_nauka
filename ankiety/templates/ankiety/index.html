@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Srona z pytaniami i odpowiedziami.</title>
+    </head>
+    <body>
+        {% if lista_ostatnich_pytan %}
+            <ul>
+                {% for pytanie in lista_ostatnich_pytan %}
+                    <li><a href="{{ pytanie.id }}/">{{ pytanie.pytanie_tekst }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak ankiet do wyświetlenia.</p>
+        {% endif %}
+    </body>
+</html>
