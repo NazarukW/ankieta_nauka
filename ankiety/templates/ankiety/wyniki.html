@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyniki głosowania.</title>
+</head>
+<body>
+    <h1>{{ pytanie.pytanie_tekst}}</h1>
+    <ul>
+      {% for wybory in pytanie.wybory_set.all %}
+        <li>{{wybory.wybory_tekst}} -- {{ wybory.glosy}} głosów</li>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url "ankiety:szczegóły" pytanie.id%}">Chcesz zaglosować ponownie?</a>
+
+</body>
+</html>

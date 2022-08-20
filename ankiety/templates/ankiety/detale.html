@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Pytanie</title>
+</head>
+<body>
+    <form action="{% url "ankiety:glosy_dla_pytania" pytanie.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ pytanie_tekst }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for wybory in pytanie.wybory_set.all %}
+            <input type="radio" name="wybory" id="wybory{{ forloop.counter }}" value="{{wybory.id}}">
+            <label for="wybory{{ forloop.counter }}">{{ wybory.wybory_tekst}}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Zagłosuj">
+    </form>
+    <br>
+    <a href="{% url "ankiety:index" %}">Strona domowa</a>
+</body>
+</html>

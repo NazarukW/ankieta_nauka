@@ -4,10 +4,11 @@
         <title>Srona z pytaniami i odpowiedziami.</title>
     </head>
     <body>
+        <h1>Srona z pytaniami i odpowiedziami.</h1>
         {% if lista_ostatnich_pytan %}
             <ul>
                 {% for pytanie in lista_ostatnich_pytan %}
-                    <li><a href="{{ pytanie.id }}/">{{ pytanie.pytanie_tekst }}</a></li>
+                    <li><a href="{% url "ankiety:szczegóły" pytanie.id %}">{{ pytanie.pytanie_tekst }}</a></li>
                 {% endfor %}
             </ul>
         {% else %}
