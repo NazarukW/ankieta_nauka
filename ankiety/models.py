@@ -12,7 +12,8 @@ class Pytanie(models.Model):
         return self.pytanie_tekst
         
     def ostatnio_opublikowane(self):
-        return self.data_publ >= timezone.now() - datetime.timedelta(days=1)
+        teraz = timezone.now()
+        return teraz - datetime.timedelta(days=1) <= self.data_publ <= teraz
 
 
 class Wybory(models.Model):

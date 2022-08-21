@@ -1,25 +1,27 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.template import loader
+from django.views import generic
 from .models import Pytanie, Wybory
 
 # Create your views here.
 
-def index(request):
-    lista_ostatnich_pytan = Pytanie.objects.order_by("data_publ")[:5]
-    context = {
-        "lista_ostatnich_pytan": lista_ostatnich_pytan,
-    }
-    return render(request, "ankiety/index.html", context)
+class IndexView(generic.ListView):
+    template_name = "ankiety/index.html"
+    context_object_name = "lista_ostatnich_pytan"
+
+    def get_queryset(self):
+        """Zwraca listę ostatnich pięciu pytań"""
+        return Pytanie.objects.order_by("data_publ")[:5]
+
+class DetaleView(generic.DetailView):
+    model = Pytanie
+    template_name = "ankiety/detale.html"
+
     
-def detale(request, pytanie_id):
-    pytanie = get_object_or_404(Pytanie, pk=pytanie_id)
-    return render(request, "ankiety/detale.html", {"pytanie": pytanie})
-    
-def wyniki(request, pytanie_id):
-    pytanie = get_object_or_404(Pytanie, pk=pytanie_id)
-    return render(request, "ankiety/wyniki.html", {"pytanie": pytanie})
+class WynikiView(generic.DetailView):
+    model = Pytanie
+    template_name = "ankiety/wyniki.html"
     
 def glosy(request, pytanie_id):
     pytanie = get_object_or_404(Pytanie, pk=pytanie_id)
