@@ -2,27 +2,39 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 from .models import Pytanie, Wybory
 
 # Create your views here.
+
 
 class IndexView(generic.ListView):
     template_name = "ankiety/index.html"
     context_object_name = "lista_ostatnich_pytan"
 
     def get_queryset(self):
-        """Zwraca listę ostatnich pięciu pytań"""
-        return Pytanie.objects.order_by("data_publ")[:5]
+        """Zwraca listę ostatnich pięciu pytań. Nie pokazuje tych co mają byśopublikowane w przyszłości"""
+        return Pytanie.objects.filter(
+            data_publ__lte=timezone.now()
+        ).order_by("-data_publ")[:5]
+
 
 class DetaleView(generic.DetailView):
     model = Pytanie
     template_name = "ankiety/detale.html"
 
+    def get_queryset(self):
+        """
+        Nie wyświetla ankiet, które nie są jeszcze opublikowane
+        """
+        return Pytanie.objects.filter(data_publ__lte=timezone.now())
+
     
 class WynikiView(generic.DetailView):
     model = Pytanie
     template_name = "ankiety/wyniki.html"
-    
+
+
 def glosy(request, pytanie_id):
     pytanie = get_object_or_404(Pytanie, pk=pytanie_id)
     try:

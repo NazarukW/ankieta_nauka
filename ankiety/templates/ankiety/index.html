@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "ankiety/style.css" %}">
     <head>
-        <title>Srona z pytaniami i odpowiedziami.</title>
+        <title>Strona z pytaniami i odpowiedziami.</title>
     </head>
     <body>
-        <h1>Srona z pytaniami i odpowiedziami.</h1>
+        <h1>Strona z pytaniami i odpowiedziami.</h1>
         {% if lista_ostatnich_pytan %}
             <ul>
                 {% for pytanie in lista_ostatnich_pytan %}

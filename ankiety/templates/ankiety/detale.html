@@ -2,9 +2,11 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Pytanie</title>
+    <title>Ankieta</title>
 </head>
 <body>
+    <h1>Ankieta nr {{pytanie.id}}</h1>
+    <h2>{{pytanie.pytanie_tekst}}</h2>
     <form action="{% url "ankiety:glosy_dla_pytania" pytanie.id %}" method="post">
     {% csrf_token %}
     <fieldset>

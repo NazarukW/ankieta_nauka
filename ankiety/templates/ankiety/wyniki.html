@@ -5,7 +5,7 @@
     <title>Wyniki głosowania.</title>
 </head>
 <body>
-    <h1>{{ pytanie.pytanie_tekst}}</h1>
+    <h1>Wyniki głsowania dla pytania: {{ pytanie.pytanie_tekst}}</h1>
     <ul>
       {% for wybory in pytanie.wybory_set.all %}
         <li>{{wybory.wybory_tekst}} -- {{ wybory.glosy}} głosów</li>
